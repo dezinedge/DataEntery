@@ -35,62 +35,64 @@
         
         $(function(){
             FillDropdown();
-        });
-        
-        function AddDatabase()
-        {   
             
-            
-            
-            
-            
-            if(CheckUser(device.uuid)){
-                
-                //,Save &amp; Upload Data
-                
+            $("#btnUploadData").click(function(e){
+                e.preventDefault();
+                if(CheckUser(device.uuid)){
+                 
                 $("#btnSave").attr("disabled","disabled");
                 $("#btnSave").val('Uploading ...');
                 
-                    var specialities = '';
-                    
-                     $('.spcheckbox').each(function() {
-                        if($(this).hasClass('checked'))
-                        {
-                            specialities += $(this).attr('data-value') + ',';
-                        }
-                    });
-                    
-                    specialities = specialities.slice(0,-1);
-                    
-                    vlTypes = $("#ddlTypes").val();
-                    vlLatitude = $("#txtLatitude").val();
-                    vlLongitude = $("#txtLongitude").val();
-                    vlHosipital = $("#txtHosipital").val();
-                    vlAddress1 = $("#txtAddress1").val();
-                    vlAddress2 = '';
-                    vlPhoneNo = $("#txtPhoneNo").val();
-                    
-                    $.ajax({
-                       	url: 'http://aurangabadcitycare.com/index.php',
-                        type: 'POST',
-                        data: { pDbName:vlHosipital, pDbAddress1:vlAddress1, pDbAddress2:vlAddress2,
-                            pLatitude:vlLatitude,pLongitude:vlLongitude ,pDbImage:imageDataSrv,pDbTypeId:vlTypes,pUdid:device.uuid,pPhoneNo:vlPhoneNo,pSpecialities : specialities },
-                        datatype: 'application/json',
-                        success: function(msg) {
-                            $("#btnSave").removeAttr("disabled");
-                            $("#btnSave").val('Save &amp; Upload Data');
-                            alert('Data has been stored successfully!');
-                            clearControl();
-                        },
-                        error: function(e,r,err) { alert('Failed : !' + r + ', ' + err); },
-                	    crossDomain: true,
-                        async: false,
-                	});      
+                var specialities = '';
+                
+                 $('.spcheckbox').each(function() {
+                    if($(this).hasClass('checked'))
+                    {
+                        specialities += $(this).attr('data-value') + ',';
+                    }
+                });
+                
+                specialities = specialities.slice(0,-1);
+                
+                vlTypes = $("#ddlTypes").val();
+                vlLatitude = $("#txtLatitude").val();
+                vlLongitude = $("#txtLongitude").val();
+                vlHosipital = $("#txtHosipital").val();
+                vlAddress1 = $("#txtAddress1").val();
+                vlAddress2 = '';
+                vlPhoneNo = $("#txtPhoneNo").val();
+                
+                
+                
+                $.ajax({
+                   	url: 'http://aurangabadcitycare.com/index.php',
+                    type: 'POST',
+                    data: { pDbName:vlHosipital, pDbAddress1:vlAddress1, pDbAddress2:vlAddress2,
+                        pLatitude:vlLatitude,pLongitude:vlLongitude ,pDbImage:imageDataSrv,pDbTypeId:vlTypes,pUdid:device.uuid,pPhoneNo:vlPhoneNo,pSpecialities : specialities },
+                    datatype: 'application/json',
+                    success: function(msg) {
+                        $("#btnSave").removeAttr("disabled");
+                        $("#btnSave").val('Save &amp; Upload Data');
+                        alert('Data has been stored successfully!');
+                        clearControl();
+                    },
+                    error: function(e,r,err) { alert('Failed : !' + r + ', ' + err); },
+            	    crossDomain: true,
+                    async: false,
+            	});      
             }
             else
             {
                 alert('Create your profile first in order to start enteries');
             }
+                
+            });
+            
+        });
+        
+        function AddDatabase()
+        {  
+            
             
             return false;
         }
@@ -502,7 +504,7 @@
                 </div>
                 <div class="form-group">
                   <div class="col-lg-9 col-lg-offset-3">        
-                    <a href="#" class="btn btn-sm btn-primary" id="btnSave"  onclick="AddDatabase(); return false;">Save &amp; Upload Data</a>
+                    <a href="#" class="btn btn-sm btn-primary" id="btnUploadData">Save &amp; Upload Data</a>
                   </div>
                 </div>
               </form>
