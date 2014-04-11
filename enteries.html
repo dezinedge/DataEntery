@@ -48,12 +48,13 @@
                     
                     $.each(obj,function(idx,db){
                          lstData += '<article class="media">';
-                         lstData += ' <span class="pull-left thumb-small"><img src="data:image/jpeg;base64,' + db.data.DbImage +'" class="img-circle"></span>';
+                         lstData += ' <span class="pull-left thumb-small"><img src="data:image/jpeg;base64,' + db.data.DbImage +'"></span>';
                          lstData += '<div class="media-body">';
                          lstData += '<a href="#" class="h4">'+ db.data.DbName +'</a>';
                          lstData += '<div class="block"><span class="label label-warning">'+ db.data.Specialities+'</span></div>';
-                         lstData += '<div class="block">'+db.data.PhoneNo+'</div>';
+                         lstData += '<small class="block">'+db.data.Latitude+' | '+db.data.Longitude+'</small>';
                          lstData += '<div class="block">'+db.data.DbAddress1+'</div>';
+                         lstData += '<div class="block">'+db.data.PhoneNo+'</div>';
                          lstData += '</div>';
                          lstData += '</article>';
                          lstData += '<div class="line pull-in"></div>';
