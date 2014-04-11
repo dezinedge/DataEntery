@@ -39,6 +39,7 @@
         
         function AddDatabase()
         {   
+
             if(CheckUser(device.uuid)){
                 
                     var specialities = '';
@@ -62,13 +63,13 @@
                        	url: 'http://aurangabadcitycare.com/index.php',
                         type: 'POST',
                         data: { pDbName:vlHosipital, pDbAddress1:vlAddress1, pDbAddress2:vlAddress2,
-                            pLatitude:vlLatitude,pLongitude:vlLongitude ,pDbImage:imageDataSrv,pDbTypeId:vlTypes,pUdid:device.uuid,pPhoneNo:vlPhoneNo,pSpecialities : specialities },
+                            pLatitude:vlLatitude,pLongitude:vlLongitude ,pDbImage:imageDataSrv,pDbTypeId:vlTypes,pUdid:device.uuid,pPhoneNo:vlPhoneNo,pSpecialities : specialitiesecialities },
                         datatype: 'application/json',
                         success: function(msg) {
                             alert('Data has been stored successfully!');
                             clearControl();
                         },
-                        error: function() { alert('Failed!'); },
+                        error: function(e,r,err) { alert('Failed : !' + r + ', ' + err); },
                 	    crossDomain: true,
                         async: false,
                 	});      
@@ -195,16 +196,22 @@
           <span class="thumb-small avatar inline"><img src="assets/images/avatar.jpg" alt="Data Entry Operator" class="img-circle"></span>
           <b class="caret hidden-xs-only"></b>
         </a>
-         <ul class="dropdown-menu">
-          <li><a href="index.html">Data Enteries</a></li>
-          <li><a href="users.html">Profile</a></li>
-          <li><a href="enteries">Enteries</a></li>
-        </ul>
       </li>
     </ul>
     <a class="navbar-brand" href="#">Dezinedge</a>
+    <button type="button" class="btn btn-link pull-left nav-toggle visible-xs" data-toggle="class:slide-nav slide-nav-left" data-target="body">
+      <i class="fa fa-bars fa-lg text-default"></i>
+    </button>
   </header>
   <!-- / nav -->
+  <nav id="nav" class="nav-primary hidden-xs nav-vertical">
+  <ul class="nav" data-spy="affix" data-offset-top="50">
+    <li class="active"><a href="#"><span class="h3">My Accont</span></a></li>
+    <li class=""><a href="users.html"><i class="fa fa-user fa-lg"></i><span>Profile</span></a></li>
+    <li class=""><a href="index.html"><i class="fa fa-stethoscope fa-lg"></i><span>Data Enteries</span></a></li>
+    <li class=""><a href="enteries.html"><i class="fa fa-hospital-o fa-lg"></i><span>Show Enteries</span></a></li>
+  </ul>
+  </nav>
   <section id="content">
     <section class="main padder">
       <div class="clearfix">
