@@ -71,8 +71,8 @@
                         pLatitude:vlLatitude,pLongitude:vlLongitude ,pDbImage:imageDataSrv,pDbTypeId:vlTypes,pUdid:device.uuid,pPhoneNo:vlPhoneNo,pSpecialities : specialities },
                     datatype: 'application/json',
                     success: function(msg) {
-                        $("#btnSave").removeAttr("disabled");
-                        $("#btnSave").val('Save &amp; Upload Data');
+                        $("#btnUploadData").removeAttr("disabled");
+                        $("#btnUploadData").val('Save &amp; Upload Data');
                         alert('Data has been stored successfully!');
                         clearControl();
                     },
