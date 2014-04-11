@@ -38,6 +38,15 @@
         {   
             if(CheckUser(device.uuid)){
                 
+                    var specialities = '';
+                    
+                    $('.checkboxes input:checked').each(function() {
+                        if($(this).is(":checked"))
+                        {
+                            specialities += $(this).val() + ',';
+                        }
+                    });
+                    
                     vlTypes = $("#ddlTypes").val();
                     vlLatitude = $("#txtLatitude").val();
                     vlLongitude = $("#txtLongitude").val();
@@ -50,7 +59,7 @@
                        	url: 'http://aurangabadcitycare.com/index.php',
                         type: 'POST',
                         data: { pDbName:vlHosipital, pDbAddress1:vlAddress1, pDbAddress2:vlAddress2,
-                            pLatitude:vlLatitude,pLongitude:vlLongitude ,pDbImage:imageDataSrv,pDbTypeId:vlTypes,pUdid:device.uuid,pPhoneNo:vlPhoneNo },
+                            pLatitude:vlLatitude,pLongitude:vlLongitude ,pDbImage:imageDataSrv,pDbTypeId:vlTypes,pUdid:device.uuid,pPhoneNo:vlPhoneNo,pSpecialities : specialities },
                         datatype: 'application/json',
                         success: function(msg) {
                             alert('Data has been stored successfully!');
@@ -143,7 +152,7 @@
             data: {},
             datatype: 'application/json',
             success: function(msg) { 
-               alert(msg);     
+               
                var obj = jQuery.parseJSON(msg);
                var ddldata = '';  
                $.each(obj,function(idx,db){
@@ -217,8 +226,7 @@
                     <input type="text" name="txtHosipital" id="txtHosipital"  placeholder="Enter Name Here.." class="bg-focus form-control" data-required="true">
                   </div>
                 </div>
-                <div class="row">
-                <div class="col-lg-6">
+                <div class="form-group">
           <!-- scrollable inbox widget -->
                   <section class="panel">
                     <header class="panel-heading">
@@ -429,7 +437,7 @@
                     </section>
                   </section>
                 </div>
-                </div>
+                
                  <div class="form-group">
                   <label class="col-lg-3 control-label">Address</label>
                   <div class="col-lg-8">
@@ -462,7 +470,7 @@
                 </div>
                 <div class="form-group">
                   <div class="col-lg-9 col-lg-offset-3">                      
-                    <button type="button" name="btnSave" id="btnSave" class="btn btn-primary">Save &amp; Upload Data</button>
+                    <button type="button" name="btnSave" id="btnSave" class="btn btn-primary" onclick="AddDatabase();">Save &amp; Upload Data</button>
                   </div>
                 </div>
               </form>
