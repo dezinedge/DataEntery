@@ -39,17 +39,28 @@
         
         function AddDatabase()
         {   
-
+            
+            
+            
+            
+            
             if(CheckUser(device.uuid)){
+                
+                //,Save &amp; Upload Data
+                
+                $("#btnSave").attr("disabled","disabled");
+                $("#btnSave").val('Uploading ...');
                 
                     var specialities = '';
                     
-                    $('.checkboxes input:checked').each(function() {
-                        if($(this).is(":checked"))
+                     $('.spcheckbox').each(function() {
+                        if($(this).hasClass('checked'))
                         {
-                            specialities += $(this).val() + ',';
+                            specialities += $(this).attr('data-value') + ',';
                         }
                     });
+                    
+                    specialities = specialities.slice(0,-1);
                     
                     vlTypes = $("#ddlTypes").val();
                     vlLatitude = $("#txtLatitude").val();
@@ -63,9 +74,11 @@
                        	url: 'http://aurangabadcitycare.com/index.php',
                         type: 'POST',
                         data: { pDbName:vlHosipital, pDbAddress1:vlAddress1, pDbAddress2:vlAddress2,
-                            pLatitude:vlLatitude,pLongitude:vlLongitude ,pDbImage:imageDataSrv,pDbTypeId:vlTypes,pUdid:device.uuid,pPhoneNo:vlPhoneNo,pSpecialities : specialitiesecialities },
+                            pLatitude:vlLatitude,pLongitude:vlLongitude ,pDbImage:imageDataSrv,pDbTypeId:vlTypes,pUdid:device.uuid,pPhoneNo:vlPhoneNo,pSpecialities : specialities },
                         datatype: 'application/json',
                         success: function(msg) {
+                            $("#btnSave").removeAttr("disabled");
+                            $("#btnSave").val('Save &amp; Upload Data');
                             alert('Data has been stored successfully!');
                             clearControl();
                         },
@@ -260,196 +273,196 @@
                      <div class="checkbox">
                         <label class="checkbox-custom">
                           <input type="checkbox" name="cbAcupuncturist" id="cbAcupuncturist" value="Acupuncturist">
-                          <i class="fa fa-check-square-o"></i>
+                          <i class="fa fa-check-square-o spcheckbox" data-value="Acupuncturist"></i>
                           Acupuncturist
                         </label>
                      </div>
                      <div class="checkbox">
                         <label class="checkbox-custom">
                           <input type="checkbox" name="cbAddictionPsychiatry" id="cbAddictionPsychiatry" value="Addiction Psychiatry">
-                          <i class="fa fa-check-square-o"></i>
+                          <i class="fa fa-check-square-o spcheckbox" data-value="Addiction Psychiatry"></i>
                           Addiction Psychiatry
                         </label>
                      </div>
                       <div class="checkbox">
                         <label class="checkbox-custom">
                           <input type="checkbox" name="cbAyurvedic" id="cbAyurvedic" value="Ayurvedic">
-                          <i class="fa fa-check-square-o"></i>
+                          <i class="fa fa-check-square-o spcheckbox" data-value="Ayurvedic"></i>
                           Ayurvedic
                         </label>
                      </div>
                       <div class="checkbox">
                         <label class="checkbox-custom">
                           <input type="checkbox" name="cbCardiologist" id="cbCardiologist" value="Cardiologist">
-                          <i class="fa fa-check-square-o"></i>
+                          <i class="fa fa-check-square-o spcheckbox" data-value="Cardiologist"></i>
                           Cardiologist
                         </label>
                      </div>
                      <div class="checkbox">
                         <label class="checkbox-custom">
                           <input type="checkbox" name="cbChestPhysician" id="cbChestPhysician" value="Chest Physician">
-                          <i class="fa fa-check-square-o"></i>
+                          <i class="fa fa-check-square-o spcheckbox" data-value="Chest Physician"></i>
                           Chest Physician
                         </label>
                      </div>
                      <div class="checkbox">
                         <label class="checkbox-custom">
                           <input type="checkbox" name="cbDentist" id="cbDentist" value="Dentist">
-                          <i class="fa fa-check-square-o"></i>
+                          <i class="fa fa-check-square-o spcheckbox" data-value="Chest Dentist"></i>
                           Dentist
                         </label>
                      </div>
                       <div class="checkbox">
                         <label class="checkbox-custom">
                           <input type="checkbox" name="cbDermatologist" id="cbDermatologist" value="Dermatologist">
-                          <i class="fa fa-check-square-o"></i>
+                          <i class="fa fa-check-square-o spcheckbox" data-value="Dermatologist"></i>
                           Dermatologist
                         </label>
                      </div>
                       <div class="checkbox">
                         <label class="checkbox-custom">
                           <input type="checkbox" name="cbDiabetologist" id="cbDiabetologist" value="Diabetologist">
-                          <i class="fa fa-check-square-o"></i>
+                          <i class="fa fa-check-square-o spcheckbox" data-value="Diabetologist"></i>
                           Diabetologist
                         </label>
                      </div>
                      <div class="checkbox">
                         <label class="checkbox-custom">
                           <input type="checkbox" name="cbDietician" id="cbDietician" value="Dietician">
-                          <i class="fa fa-check-square-o"></i>
+                          <i class="fa fa-check-square-o spcheckbox" data-value="Dietician"></i>
                           Dietician
                         </label>
                      </div>
                      <div class="checkbox">
                         <label class="checkbox-custom">
                           <input type="checkbox" name="cbENTSurgeon" id="cbENTSurgeon" value="ENT Surgeon">
-                          <i class="fa fa-check-square-o"></i>
+                          <i class="fa fa-check-square-o spcheckbox" data-value="ENT Surgeon"></i>
                           ENT Surgeon
                         </label>
                      </div>
                      <div class="checkbox">
                         <label class="checkbox-custom">
                           <input type="checkbox" name="cbEyeSpecialists" id="cbEyeSpecialists" value="Eye Specialists">
-                          <i class="fa fa-check-square-o"></i>
+                          <i class="fa fa-check-square-o spcheckbox" data-value="Eye Specialists"></i>
                           Eye Specialists
                         </label>
                      </div>
                         <div class="checkbox">
                         <label class="checkbox-custom">
                           <input type="checkbox" name="cbPlasticSurgeon" id="cbPlasticSurgeon" value="Plastic Surgeon">
-                          <i class="fa fa-check-square-o"></i>
+                          <i class="fa fa-check-square-o spcheckbox" data-value="Plastic Surgeon"></i>
                           Plastic Surgeon
                         </label>
                      </div>
                      <div class="checkbox">
                         <label class="checkbox-custom">
                           <input type="checkbox" name="cbGeneralPractitioner" id="cbGeneralPractitioner" value="General Practitioner">
-                          <i class="fa fa-check-square-o"></i>
+                          <i class="fa fa-check-square-o spcheckbox" data-value="General Practitioner"></i>
                           General Practitioner
                         </label>
                      </div>
                      <div class="checkbox">
                         <label class="checkbox-custom">
                           <input type="checkbox" name="cbGynecologist" id="cbGynecologist" value="Gynecologist">
-                          <i class="fa fa-check-square-o"></i>
+                          <i class="fa fa-check-square-o spcheckbox" data-value="Gynecologist"></i>
                           Gynecologist
                         </label>
                      </div>
                      <div class="checkbox">
                         <label class="checkbox-custom">
                           <input type="checkbox" name="cbHomeopath" id="cbHomeopath" value="Homeopath">
-                          <i class="fa fa-check-square-o"></i>
+                          <i class="fa fa-check-square-o spcheckbox" data-value="Homeopath"></i>
                           Homeopath
                         </label>
                      </div>
                      <div class="checkbox">
                         <label class="checkbox-custom">
                           <input type="checkbox" name="cbNephrologist" id="cbNephrologist" value="Nephrologist">
-                          <i class="fa fa-check-square-o"></i>
+                          <i class="fa fa-check-square-o spcheckbox" data-value="Nephrologist"></i>
                           Nephrologist
                         </label>
                      </div>
                      <div class="checkbox">
                         <label class="checkbox-custom">
                           <input type="checkbox" name="cbNeurologist" id="cbNeurologist" value="Neurologist">
-                          <i class="fa fa-check-square-o"></i>
+                          <i class="fa fa-check-square-o spcheckbox" data-value="Neurologist"></i>
                           Neurologist
                         </label>
                      </div>
                      <div class="checkbox">
                         <label class="checkbox-custom">
                           <input type="checkbox" name="cbOphthalmologist" id="cbOphthalmologist" value="Ophthalmologist">
-                          <i class="fa fa-check-square-o"></i>
+                          <i class="fa fa-check-square-o spcheckbox" data-value="Ophthalmologist"></i>
                           Ophthalmologist
                         </label>
                      </div>
                      <div class="checkbox">
                         <label class="checkbox-custom">
                           <input type="checkbox" name="cbOrthopedicSurgeon" id="cbOrthopedicSurgeon" value="Orthopedic Surgeon">
-                          <i class="fa fa-check-square-o"></i>
+                          <i class="fa fa-check-square-o spcheckbox" data-value="Orthopedic Surgeon"></i>
                           Orthopedic Surgeon
                         </label>
                      </div>
                      <div class="checkbox">
                         <label class="checkbox-custom">
                           <input type="checkbox" name="cbPathologist" id="cbPathologist" value="Pathologist">
-                          <i class="fa fa-check-square-o"></i>
+                          <i class="fa fa-check-square-o spcheckbox" data-value="Pathologist"></i>
                           Pathologist
                         </label>
                      </div>
                      <div class="checkbox">
                         <label class="checkbox-custom">
                           <input type="checkbox" name="cbPediatrics" id="cbPediatrics" value="Pediatrics">
-                          <i class="fa fa-check-square-o"></i>
+                          <i class="fa fa-check-square-o spcheckbox" data-value="Pediatrics"></i>
                           Pediatrics
                         </label>
                      </div>
                      <div class="checkbox">
                         <label class="checkbox-custom">
                           <input type="checkbox" name="cbPhysiotherapist" id="cbPhysiotherapist" value="Physiotherapist">
-                          <i class="fa fa-check-square-o"></i>
+                          <i class="fa fa-check-square-o spcheckbox" data-value="Physiotherapist"></i>
                           Physiotherapist
                         </label>
                      </div>
                      <div class="checkbox">
                         <label class="checkbox-custom">
                           <input type="checkbox" name="cbPsychiatrist" id="cbPsychiatrist" value="Psychiatrist">
-                          <i class="fa fa-check-square-o"></i>
+                          <i class="fa fa-check-square-o spcheckbox" data-value="Psychiatrist"></i>
                           Psychiatrist
                         </label>
                      </div>
                      <div class="checkbox">
                         <label class="checkbox-custom">
                           <input type="checkbox" name="cbPsychologist" id="cbPsychologist" value="Psychologist">
-                          <i class="fa fa-check-square-o"></i>
+                          <i class="fa fa-check-square-o spcheckbox" data-value="Psychologist"></i>
                           Psychologist
                         </label>
                      </div>
                      <div class="checkbox">
                         <label class="checkbox-custom">
                           <input type="checkbox" name="cbRadiologist" id="cbRadiologist" value="Radiologist">
-                          <i class="fa fa-check-square-o"></i>
+                          <i class="fa fa-check-square-o spcheckbox" data-value="Radiologist"></i>
                           Radiologist
                         </label>
                      </div>
                      <div class="checkbox">
                         <label class="checkbox-custom">
                           <input type="checkbox" name="cbUrologist" id="cbUrologist" value="Urologist">
-                          <i class="fa fa-check-square-o"></i>
+                          <i class="fa fa-check-square-o spcheckbox" data-value="Urologist"></i>
                           Urologist
                         </label>
                      </div>
                      <div class="checkbox">
                         <label class="checkbox-custom">
                           <input type="checkbox" name="cbVascularsurgeon" id="cbVascularsurgeon" value="Vascular Surgeon">
-                          <i class="fa fa-check-square-o"></i>
+                          <i class="fa fa-check-square-o spcheckbox" data-value="Vascular Surgeon"></i>
                           Vascular Surgeon
                         </label>
                      </div>
                      <div class="checkbox">
                         <label class="checkbox-custom">
                           <input type="checkbox" name="cbOthers" id="cbOthers" value="Others">
-                          <i class="fa fa-check-square-o"></i>
+                          <i class="fa fa-check-square-o spcheckbox" data-value="Others"></i>
                             Others
                         </label>
                      </div>
