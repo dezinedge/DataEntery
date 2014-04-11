@@ -18,171 +18,59 @@
     <script src="assets/js/jquery.min.js"></script>  
   <script src="phonegap.js" type="text/javascript"></script>
    <script type="text/javascript">
-        var pictureSource;   // picture source
-        var destinationType; // sets the format of returned value
-        var imageDataSrv;
-        
+       document.addEventListener("deviceready", onDeviceReady, false);
 
-
-
-        document.addEventListener("deviceready", onDeviceReady, false);
+        function onDeviceReady() {
+           
+        }
         
-          function onDeviceReady() {
-            pictureSource=navigator.camera.PictureSourceType;
-            destinationType=navigator.camera.DestinationType;
-            
-            }
-        
-        $(function(){
-            FillDropdown();
-        });
-        
-        function AddDatabase()
+        function AddUser()
         {   
-            if(CheckUser(device.uuid)){
+             var pPassword = document.getElementById('pPassword');
+             
+            if(ValidateUser(pPassword.value)){
                 
-                    var specialities = '';
-                    
-                    $('.checkboxes input:checked').each(function() {
-                        if($(this).is(":checked"))
-                        {
-                            specialities += $(this).val() + ',';
-                        }
-                    });
-                    
-                    vlTypes = $("#ddlTypes").val();
-                    vlLatitude = $("#txtLatitude").val();
-                    vlLongitude = $("#txtLongitude").val();
-                    vlHosipital = $("#txtHosipital").val();
-                    vlAddress1 = $("#txtAddress1").val();
-                    vlAddress2 = '';
-                    vlPhoneNo = $("#txtPhoneNo").val();
-                    
-                    $.ajax({
-                       	url: 'http://aurangabadcitycare.com/index.php',
-                        type: 'POST',
-                        data: { pDbName:vlHosipital, pDbAddress1:vlAddress1, pDbAddress2:vlAddress2,
-                            pLatitude:vlLatitude,pLongitude:vlLongitude ,pDbImage:imageDataSrv,pDbTypeId:vlTypes,pUdid:device.uuid,pPhoneNo:vlPhoneNo,pSpecialities : specialities },
-                        datatype: 'application/json',
-                        success: function(msg) {
-                            alert('Data has been stored successfully!');
-                            clearControl();
-                        },
-                        error: function() { alert('Failed!'); },
-                	    crossDomain: true,
-                        async: false,
-                	});      
+                var pUserName = document.getElementById('pUserName');
+                var pContactNo = document.getElementById('pContactNo');
+                        
+                $.ajax({
+                   	url: 'http://aurangabadcitycare.com/users.php',
+                    type: 'POST',
+                    data: { pUserId:device.uuid, pUserName:pUserName.value, pContactNo:pContactNo.value },
+                    datatype: 'application/json',
+                    success: function(msg) {
+                        alert('User has been stored successfully!');
+                        pContactNo.value ='';
+                        pUserName.value ='';
+                    },
+                    error: function() { alert('Failed!'); },
+            	    crossDomain: true
+            	});
             }
             else
             {
-                alert('Create your profile first in order to start enteries');
+                alert('Invalid User!');
             }
-            
-            return false;
         }
         
-        
-        function CheckUser(prUsersId)
+        function ValidateUser(prPassword)
         {
             result = 0;
-            
             $.ajax({
-               	url: 'http://aurangabadcitycare.com/checkusers.php',
+               	url: 'http://aurangabadcitycare.com/validate.php',
                 type: 'POST',
                 async: false,
-                data: { pUserId:prUsersId},
+                data: { pPassword:prPassword},
                 datatype: 'application/json',
                 success: function(msg) { result = msg; },
                 error: function() { alert('Failed!'); },
         	    crossDomain: true
-  	         });
+  	     });
          
-            
             if(result > 0){return true;}
             else{return false;}
         }
-        
-        function GetLocation()
-        {
-            navigator.geolocation.getCurrentPosition(onSuccess, onError,{maximumAge: 300000, timeout:10000, enableHighAccuracy : true});
-            return false;   
-        }
-        
-        function onSuccess(position) {
-            $("#txtLatitude").val(position.coords.latitude);
-            $("#txtLongitude").val(position.coords.longitude);
-        }
-        
-        function onError(){alert('error occured');}
-        
-        function capturePhoto(){
-            //navigator.camera.getPicture(onPhotoURISuccess,null,{sourceType:1,quality:60,destinationType: destinationType.FILE_URI,saveToPhotoAlbum: true });
-            navigator.camera.getPicture(onPhotoDataSuccess,null,{sourceType:1,quality:50,destinationType: Camera.DestinationType.DATA_URL, allowEdit: true});
-            return false;
-        }
-        
-        function onPhotoURISuccess(imageURI){
-            alert('image uploaded success');
-            $("#imgHospital").attr("src",imageURI);
-            $("#imgHospital").css("width","200px");
-            $("#imgHospital").css("height","150px");
-            imageDataSrv = imageURI;
-            //window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
-        }
-        
-        function onPhotoDataSuccess(imageData)
-        {
-            $("#imgHospital").attr("src","data:image/jpeg;base64," + imageData);
-            $("#imgHospital").css("width","320px");
-            $("#imgHospital").css("height","320px");
-            imageDataSrv = imageData;
-        }
-
-        
-        function clearControl()
-        {
-            $("#ddlTypes").val(-1);
-            $("#txtLatitude").val("");
-            $("#txtLongitude").val("");
-            $("#txtHosipital").val("");
-            $("#txtAddress1").val("");
-            $("#txtPhoneNo").val("");
-            $("#imgHospital").attr("src","assets/images/NoImage.png");
-        }
-        
-        function FillDropdown()
-        {
-            
-          $.ajax({
-           	url: 'http://aurangabadcitycare.com/dbtypes.php',
-            type: 'POST',
-            data: {},
-            datatype: 'application/json',
-            success: function(msg) { 
-               
-               var obj = jQuery.parseJSON(msg);
-               var ddldata = '';  
-               $.each(obj,function(idx,db){
-                    
-                    if(idx === 0){
-                        ddldata += '<option value="'+db.data.DbTypeId+'" selected="selected">'+db.data.DbType+'</option>';
-                    }
-                    else
-                    {
-                        ddldata += '<option value="'+db.data.DbTypeId+'">'+db.data.DbType+'</option>';
-                    }
-               }); 
-               $("#ddlTypes").html(ddldata);
-               
-               
-            },
-            error: function() { 
-               alert('error');     
-            },
-        	crossDomain: true
-        	});
-        }
-        
+                
    </script>
 </head>
 <body>
@@ -215,7 +103,7 @@
                   <div class="col-lg-9 media">
                     <img src="assets/images/NoImage.png" style="width: 320px;height: 320px;" id="imgHospital"/><div class="clearfix"></div>
                     <div class="media-body">
-                      <a href="#" class="btn btn-sm btn-danger" id="btnCapture" onclick="capturePhoto(); return false;">Capture Photo</a>
+                      <button class="btn btn-sm btn-danger" id="btnCapture" onclick="capturePhoto();">Capture Photo</button>
                     </div>
                   </div>
                 </div>
@@ -459,8 +347,8 @@
                 </div>
                  <div class="form-group">
                   <label class="col-lg-3 control-label">Get Latitude &amp; Longitude.</label>
-                  <div class="col-lg-8">    
-                    <a href="#" class="btn btn-sm btn-danger" id="btnGetLocation" name="btnGetLocation" onclick="GetLocation(); return false;">Get Location</a>
+                  <div class="col-lg-8">
+                    <button class="btn btn-sm btn-danger" id="btnGetLocation" name="btnGetLocation" onclick="GetLocation();">Get Location</button>
                   </div>
                 </div>
                 <div class="form-group">
@@ -476,8 +364,8 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <div class="col-lg-9 col-lg-offset-3">        
-                    <a href="#" class="btn btn-sm btn-primary" id="btnSave"  onclick="AddDatabase(); return false;">Save &amp; Upload Data</a>
+                  <div class="col-lg-9 col-lg-offset-3">                      
+                    <button type="button" name="btnSave" id="btnSave" class="btn btn-primary" onclick="AddDatabase();">Save &amp; Upload Data</button>
                   </div>
                 </div>
               </form>
