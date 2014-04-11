@@ -22,6 +22,9 @@
         var destinationType; // sets the format of returned value
         var imageDataSrv;
         
+
+
+
         document.addEventListener("deviceready", onDeviceReady, false);
         
           function onDeviceReady() {
@@ -74,6 +77,8 @@
             {
                 alert('Create your profile first in order to start enteries');
             }
+            
+            return false;
         }
         
         
@@ -99,7 +104,8 @@
         
         function GetLocation()
         {
-            navigator.geolocation.getCurrentPosition(onSuccess, onError,{maximumAge: 300000, timeout:10000, enableHighAccuracy : true});   
+            navigator.geolocation.getCurrentPosition(onSuccess, onError,{maximumAge: 300000, timeout:10000, enableHighAccuracy : true});
+            return false;   
         }
         
         function onSuccess(position) {
@@ -112,6 +118,7 @@
         function capturePhoto(){
             //navigator.camera.getPicture(onPhotoURISuccess,null,{sourceType:1,quality:60,destinationType: destinationType.FILE_URI,saveToPhotoAlbum: true });
             navigator.camera.getPicture(onPhotoDataSuccess,null,{sourceType:1,quality:50,destinationType: Camera.DestinationType.DATA_URL, allowEdit: true});
+            return false;
         }
         
         function onPhotoURISuccess(imageURI){
@@ -223,7 +230,7 @@
                 <div class="form-group">
                   <label class="col-lg-3 control-label">Data Name</label>
                   <div class="col-lg-8">
-                    <input type="text" name="txtHosipital" id="txtHosipital"  placeholder="Enter Name Here.." class="bg-focus form-control" data-required="true">
+                    <input type="text" name="txtHosipital" id="txtHosipital"  placeholder="Enter Name Here.." class="bg-focus form-control">
                   </div>
                 </div>
                 <div class="form-group">
@@ -447,7 +454,7 @@
                 <div class="form-group">
                   <label class="col-lg-3 control-label">Phone No.</label>
                   <div class="col-lg-8">
-                    <input type="text" name="txtPhoneNo" id="txtPhoneNo"  placeholder="Enter Phone No..." class="bg-focus form-control" data-required="true">
+                    <input type="text" name="txtPhoneNo" id="txtPhoneNo"  placeholder="Enter Phone No..." class="bg-focus form-control">
                   </div>
                 </div>
                  <div class="form-group">
@@ -459,13 +466,13 @@
                 <div class="form-group">
                   <label class="col-lg-3 control-label">Latitude.</label>
                   <div class="col-lg-8">
-                    <input type="text" name="txtLatitude" id="txtLatitude" disabled="disabled" class="bg-focus form-control" data-required="true">
+                    <input type="text" name="txtLatitude" id="txtLatitude" disabled="disabled" class="bg-focus form-control">
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-lg-3 control-label">Longitude.</label>
                   <div class="col-lg-8">
-                    <input type="text" name="txtLongitude" id="txtLongitude" disabled="disabled" class="bg-focus form-control" data-required="true">
+                    <input type="text" name="txtLongitude" id="txtLongitude" disabled="disabled" class="bg-focus form-control">
                   </div>
                 </div>
                 <div class="form-group">
