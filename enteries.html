@@ -58,17 +58,17 @@
                              lstData += '<div class="line pull-in"></div>';
                         }); 
                         
+                        if (dvContainer) dvContainer.remove();
+                        
                         $('#dvGrid').append(lstData).listview('refresh');
                     
                         pDbTypeId.value = -1;
                         
-                        if (dvContainer) dvContainer.remove();
                     },
                     error: function() { alert('Failed!');if (dvContainer) dvContainer.remove();},
             	    crossDomain: true
             	});          
             });
-            
         });
         
         
