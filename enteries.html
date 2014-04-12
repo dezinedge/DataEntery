@@ -35,14 +35,12 @@
         
         function GetEnteries()
         {
+            dvContainer = new ajaxLoader($("#content"));
             
             var lstData = '';  
             var pDbTypeId = document.getElementById('ddlTypes');
             
-            
              $('#dvGrid').html('');
-            
-            dvContainer = new ajaxLoader($("#content"));
             
             $.ajax({
                	url: 'http://aurangabadcitycare.com/getenteries.php',
@@ -67,8 +65,7 @@
                     }); 
                     
                     $('#dvGrid').append(lstData).listview('refresh');
-                    
-                        
+                
                     pDbTypeId.value = -1;
                     
                     if (dvContainer) dvContainer.remove();
