@@ -163,6 +163,13 @@
             $("#txtAddress1").val("");
             $("#txtPhoneNo").val("");
             $("#imgHospital").attr("src","assets/images/NoImage.png");
+            
+            $('.spcheckbox').each(function() {
+                if($(this).hasClass('checked'))
+                {
+                    $(this).removeClass('checked');
+                }
+            });
         }
         
         function FillDropdown()
