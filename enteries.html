@@ -46,6 +46,7 @@
                         
                         $.each(obj,function(idx,db){
                             
+                            /*
                             var arrSpecialities;
                             
                             if(db.data.Specialities.contains(','))
@@ -58,13 +59,13 @@
                             {
                                 arrSpecialities += '<span class="label label-warning">'+ db.data.Specialities+'</span>';
                             }
-                            
+                            */
                             
                              lstData += '<article class="media">';
                              lstData += ' <span class="pull-left thumb-large"><img src="data:image/jpeg;base64,' + db.data.DbImage +'"></span>';
                              lstData += '<div class="media-body">';
                              lstData += '<a href="#" class="h4">'+ db.data.DbName +'</a>';
-                             lstData += '<div class="block">'+arrSpecialities+'</div>';
+                             lstData += '<div class="block"><span class="label label-warning">'+ db.data.Specialities+'</span></div>';
                              lstData += '<small class="block">'+db.data.Latitude+' | '+db.data.Longitude+'</small>';
                              lstData += '<div class="block">'+db.data.DbAddress1+'</div>';
                              lstData += '<div class="block">'+db.data.PhoneNo+'</div>';
