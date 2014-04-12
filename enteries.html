@@ -26,56 +26,56 @@
         
         $(function(){
             FillDropdown();
+            
+            $("#btnSearchEnteries").click(function(e){
+                e.preventDefault();
+                dvContainer = new ajaxLoader($("#content"));
+                
+                var lstData = '';  
+                var pDbTypeId = document.getElementById('ddlTypes');
+                
+                 $('#dvGrid').html('');
+                
+                $.ajax({
+                   	url: 'http://aurangabadcitycare.com/getenteries.php',
+                    type: 'POST',
+                    data: { pUserId:device.uuid, pDbTypeId:pDbTypeId.value},
+                    datatype: 'application/json',
+                    success: function(msg) {
+                        var obj = jQuery.parseJSON(msg);
+                        
+                        $.each(obj,function(idx,db){
+                             lstData += '<article class="media">';
+                             lstData += ' <span class="pull-left thumb-large"><img src="data:image/jpeg;base64,' + db.data.DbImage +'"></span>';
+                             lstData += '<div class="media-body">';
+                             lstData += '<a href="#" class="h4">'+ db.data.DbName +'</a>';
+                             lstData += '<div class="block"><span class="label label-warning">'+ db.data.Specialities+'</span></div>';
+                             lstData += '<small class="block">'+db.data.Latitude+' | '+db.data.Longitude+'</small>';
+                             lstData += '<div class="block">'+db.data.DbAddress1+'</div>';
+                             lstData += '<div class="block">'+db.data.PhoneNo+'</div>';
+                             lstData += '</div>';
+                             lstData += '</article>';
+                             lstData += '<div class="line pull-in"></div>';
+                        }); 
+                        
+                        $('#dvGrid').append(lstData).listview('refresh');
+                    
+                        pDbTypeId.value = -1;
+                        
+                        if (dvContainer) dvContainer.remove();
+                    },
+                    error: function() { alert('Failed!');if (dvContainer) dvContainer.remove();},
+            	    crossDomain: true
+            	});          
+            });
+            
         });
         
         
         function onDeviceReady() {
             
         }
-        
-        function GetEnteries()
-        {
-            dvContainer = new ajaxLoader($("#content"));
-            
-            var lstData = '';  
-            var pDbTypeId = document.getElementById('ddlTypes');
-            
-             $('#dvGrid').html('');
-            
-            $.ajax({
-               	url: 'http://aurangabadcitycare.com/getenteries.php',
-                type: 'POST',
-                data: { pUserId:device.uuid, pDbTypeId:pDbTypeId.value},
-                datatype: 'application/json',
-                success: function(msg) {
-                    var obj = jQuery.parseJSON(msg);
-                    
-                    $.each(obj,function(idx,db){
-                         lstData += '<article class="media">';
-                         lstData += ' <span class="pull-left thumb-large"><img src="data:image/jpeg;base64,' + db.data.DbImage +'"></span>';
-                         lstData += '<div class="media-body">';
-                         lstData += '<a href="#" class="h4">'+ db.data.DbName +'</a>';
-                         lstData += '<div class="block"><span class="label label-warning">'+ db.data.Specialities+'</span></div>';
-                         lstData += '<small class="block">'+db.data.Latitude+' | '+db.data.Longitude+'</small>';
-                         lstData += '<div class="block">'+db.data.DbAddress1+'</div>';
-                         lstData += '<div class="block">'+db.data.PhoneNo+'</div>';
-                         lstData += '</div>';
-                         lstData += '</article>';
-                         lstData += '<div class="line pull-in"></div>';
-                    }); 
-                    
-                    $('#dvGrid').append(lstData).listview('refresh');
-                
-                    pDbTypeId.value = -1;
-                    
-                    if (dvContainer) dvContainer.remove();
-                },
-                error: function() { alert('Failed!');if (dvContainer) dvContainer.remove();},
-        	    crossDomain: true
-        	});
-        }
-        
-        
+      
         function FillDropdown()
         {
             
@@ -151,7 +151,7 @@
             </div>
             <div class="form-group">
               <div class="col-lg-9 col-lg-offset-3">                      
-                <a href="#" class="btn btn-sm btn-primary" id="btnSave"  onclick="GetEnteries(); return false;">Search Enteries</a>
+                <a href="#" class="btn btn-sm btn-primary" id="btnSearchEnteries">Search Enteries</a>
               </div>
             </div>
         </form>

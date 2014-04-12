@@ -26,13 +26,16 @@
            
         }
         
-        function AddUser()
-        {   
-            dvContainer = new ajaxLoader($("#content"));
+        $(function(){
+           $("#btnAddUsers").click(function(e){
             
-             var pPassword = document.getElementById('pPassword');
+                e.preventDefault();
+                
+                dvContainer = new ajaxLoader($("#content"));
+            
+                var pPassword = document.getElementById('pPassword');
              
-            if(ValidateUser(pPassword.value)){
+                if(ValidateUser(pPassword.value)){
                 
                 var pUserName = document.getElementById('pUserName');
                 var pContactNo = document.getElementById('pContactNo');
@@ -56,8 +59,10 @@
             {
                 if (dvContainer) dvContainer.remove();
                 alert('Invalid User!');
-            }
-        }
+            }    
+           }); 
+        });
+        
         
         function ValidateUser(prPassword)
         {
@@ -136,7 +141,7 @@
                 </div>
                 <div class="form-group">
                   <div class="col-lg-9 col-lg-offset-3">                      
-                    <a href="#" class="btn btn-sm btn-primary" id="btnSave"  onclick="AddUser(); return false;">Signup</a>
+                    <a href="#" class="btn btn-sm btn-primary" id="btnAddUsers">Signup</a>
                   </div>
                 </div>
               </form>
