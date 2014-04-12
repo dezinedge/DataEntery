@@ -20,6 +20,7 @@
   <script src="assets/js/jquery.min.js"></script>
    <script type="text/javascript">
       document.addEventListener("deviceready", onDeviceReady, false);
+        var dvContainer; 
         
         $(function(){
             FillDropdown();
@@ -32,12 +33,15 @@
         
         function GetEnteries()
         {
+            
             var lstData = '';  
             var pDbTypeId = document.getElementById('ddlTypes');
             
             
              $('#dvGrid').html('');
-        
+            
+            dvContainer = new ajaxLoader($("#content"));
+            
             $.ajax({
                	url: 'http://aurangabadcitycare.com/getenteries.php',
                 type: 'POST',
@@ -61,10 +65,13 @@
                     }); 
                     
                     $('#dvGrid').append(lstData).listview('refresh');
-
+                    
+                        
                     pDbTypeId.value = -1;
+                    
+                    if (dvContainer) dvContainer.remove();
                 },
-                error: function() { alert('Failed!'); },
+                error: function() { alert('Failed!'); if (dvContainer) dvContainer.remove();},
         	    crossDomain: true
         	});
         }
@@ -72,6 +79,9 @@
         
         function FillDropdown()
         {
+            
+            dvContainer = new ajaxLoader($("#content"));
+            
           $.ajax({
            	url: 'http://aurangabadcitycare.com/dbtypes.php',
             type: 'POST',
@@ -92,9 +102,10 @@
                }); 
                $("#ddlTypes").html(ddldata);
                
-               
+               if (dvContainer) dvContainer.remove();
             },
             error: function() { 
+               if (dvContainer) dvContainer.remove();
                alert('error');     
             },
         	crossDomain: true

@@ -71,16 +71,17 @@
                     datatype: 'application/json',
                     success: function(msg) {
                         if (dvContainer) dvContainer.remove();
-                            
+                        
                         alert('Data has been stored successfully!');
                         clearControl();
                     },
-                    error: function(e,r,err) { alert('Failed : !' + r + ', ' + err); },
+                    error: function(e,r,err) { alert('Failed : !' + r + ', ' + err); if (dvContainer) dvContainer.remove();},
             	    crossDomain: true
             	});      
             }
             else
             {
+                if (dvContainer) dvContainer.remove();
                 alert('Create your profile first in order to start enteries');
             }
                 
@@ -167,6 +168,8 @@
         function FillDropdown()
         {
             
+             dvContainer = new ajaxLoader($("#content"));
+             
           $.ajax({
            	url: 'http://aurangabadcitycare.com/dbtypes.php',
             type: 'POST',
@@ -188,9 +191,11 @@
                }); 
                $("#ddlTypes").html(ddldata);
                
+               if (dvContainer) dvContainer.remove();
                
             },
             error: function() { 
+               if (dvContainer) dvContainer.remove();     
                alert('error');     
             },
         	crossDomain: true

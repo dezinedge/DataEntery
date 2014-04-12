@@ -19,13 +19,16 @@
   <script src="phonegap.js" type="text/javascript"></script>
    <script type="text/javascript">
        document.addEventListener("deviceready", onDeviceReady, false);
-
+        var dvContainer; 
+        
         function onDeviceReady() {
            
         }
         
         function AddUser()
         {   
+            dvContainer = new ajaxLoader($("#content"));
+            
              var pPassword = document.getElementById('pPassword');
              
             if(ValidateUser(pPassword.value)){
@@ -42,19 +45,22 @@
                         alert('User has been stored successfully!');
                         pContactNo.value ='';
                         pUserName.value ='';
+                        if (dvContainer) dvContainer.remove();
                     },
-                    error: function() { alert('Failed!'); },
+                    error: function() { alert('Failed!'); if (dvContainer) dvContainer.remove(); },
             	    crossDomain: true
             	});
             }
             else
             {
+                if (dvContainer) dvContainer.remove();
                 alert('Invalid User!');
             }
         }
         
         function ValidateUser(prPassword)
         {
+            
             result = 0;
             $.ajax({
                	url: 'http://aurangabadcitycare.com/validate.php',
